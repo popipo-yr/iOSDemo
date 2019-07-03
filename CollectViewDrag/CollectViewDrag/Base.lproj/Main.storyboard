@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="DUg-ig-EHP">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="i8a-qt-bTB">
+                                <rect key="frame" x="0.0" y="253.5" width="375" height="160"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="14R-qh-pPe">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="zRf-zC-0Wb"/>
+                                        </constraints>
+                                        <state key="normal" title="自定义拖动在CollectionView内"/>
+                                        <connections>
+                                            <action selector="styleOne:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tZk-6D-pFf"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KS3-j4-7p6">
+                                        <rect key="frame" x="0.0" y="40" width="375" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="srO-dO-IM2"/>
+                                        </constraints>
+                                        <state key="normal" title="自定义拖动在Window内"/>
+                                        <connections>
+                                            <action selector="styleTwo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DlM-Gl-afm"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oe8-cm-2W2">
+                                        <rect key="frame" x="0.0" y="80" width="375" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="vE8-8L-rag"/>
+                                        </constraints>
+                                        <state key="normal" title="系统拖动在CollectionView内"/>
+                                        <connections>
+                                            <action selector="styleThree:" destination="BYZ-38-t0r" eventType="touchUpInside" id="S8X-db-4bn"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fpk-0u-8Zd">
+                                        <rect key="frame" x="0.0" y="120" width="375" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="BFa-wy-1et"/>
+                                        </constraints>
+                                        <state key="normal" title="系统拖动在Window内"/>
+                                        <connections>
+                                            <action selector="styleFour:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7wS-0G-Ixa"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="i8a-qt-bTB" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="SAH-4b-nre"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="i8a-qt-bTB" secondAttribute="trailing" id="Xg4-Bc-uNp"/>
+                            <constraint firstItem="i8a-qt-bTB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="e6w-hE-2Gr"/>
+                            <constraint firstItem="i8a-qt-bTB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="qqQ-37-kw4"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Pes-6H-WNp"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="jQH-ML-xSi">
+            <objects>
+                <navigationController id="DUg-ig-EHP" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="CrW-yr-GYJ">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="aqI-xQ-5nd"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="A4F-2N-W3V" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-949" y="335"/>
+        </scene>
+    </scenes>
+</document>

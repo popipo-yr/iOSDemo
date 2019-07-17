@@ -1,0 +1,28 @@
+kernel vec4 vignetteKernel(__sample bgImage, __sample textImage)
+{
+    // all(greaterThan(textImage.rgb, vec3(0, 0, 0)))
+    if( textImage.a == 0.0 )//文字没有覆盖到不处理
+    {
+        return bgImage.rgba;
+    }
+
+    float b_hsb = max( max(bgImage.r, bgImage.g), bgImage.b);
+    bool isLight = b_hsb > 0.5f;
+
+    //颜色反转
+    if(isLight){ //浅色变黑
+        bgImage.a = 1.0f;
+        bgImage.r = 0.0f;
+        bgImage.g = 0.0f;
+        bgImage.b = 0.0f;
+
+    }else{  //深色变白
+        bgImage.a = 1.0f;
+        bgImage.r = 1.0f;
+        bgImage.g = 1.0f;
+        bgImage.b = 1.0f;
+    }
+
+    return bgImage.rgba;
+}
+

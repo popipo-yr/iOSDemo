@@ -1,0 +1,51 @@
+kernel vec4 vignetteKernel(sampler bgImage, sampler textImage,
+                           float bgHeight ,vec4 textRange)
+{
+    //获取当前点坐标和取样
+    vec2 curPoint = destCoord();
+    __sample originSample = sample(bgImage, samplerTransform(bgImage, curPoint));
+    
+    //不在文字纹理范围直接返回原始样本
+    if ( curPoint.x < textRange[0]
+        || curPoint.x > (textRange[0] + textRange[2])
+        || curPoint.y > (bgHeight - textRange[1])
+        || curPoint.y < (bgHeight - (textRange[1] + textRange[3])) ) {
+        // 返回原图对应像素点色值
+        return originSample;
+    }
+    
+    //转换坐标到文字纹理
+    float textY = curPoint.y - bgHeight + textRange[1] + textRange[3];
+    float textX = curPoint.x - textRange[0];
+    vec2 textPoint = vec2(textX, textY);
+    
+    __sample textSample = sample(textImage,
+                                 samplerTransform(textImage, textPoint));
+    //文字纹理处无颜色值直接返回原始样本
+    if(textSample.a == 0.0)
+    {
+        return originSample;
+    }
+    
+    //获取亮度
+    float b_hsb = max( max(originSample.r, originSample.g), originSample.b);
+    bool isLight = b_hsb > 0.5f;
+    
+    //通过亮度进行颜色反转
+    if(isLight){ //浅色变黑
+        originSample.a = 1.0f;
+        originSample.r = 0.0f;
+        originSample.g = 0.0f;
+        originSample.b = 0.0f;
+        
+    }else{  //深色变白
+        originSample.a = 1.0f;
+        originSample.r = 1.0f;
+        originSample.g = 1.0f;
+        originSample.b = 1.0f;
+    }
+    
+    return originSample.rgba;
+}
+
+

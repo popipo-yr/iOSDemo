@@ -24,7 +24,6 @@ typedef struct {
     GLuint _bgImg_t_id;
     GLuint _textImg_t_id;
     GLuint _frameBuffer;
-    GLuint _texture_render_id;
     
     CGSize _bgSize;
     
@@ -67,11 +66,6 @@ typedef struct {
         glDeleteTextures(1, &_textImg_t_id);
         _textImg_t_id = 0;
     }
-    
-    if (_texture_render_id) {
-        glDeleteTextures(1, &_texture_render_id);
-        _texture_render_id = 0;
-    }
 }
 
 - (void) setupGL
@@ -100,17 +94,6 @@ typedef struct {
     
     _bgImage = bgImage;
     _bgSize = bgImage.size;
-    
-    if (_texture_render_id) {
-        glDeleteTextures(1, &_texture_render_id);
-    }
-    
-    glGenTextures(1, &_texture_render_id);
-    glBindTexture(GL_TEXTURE_2D, _texture_render_id);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _bgSize.width, _bgSize.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-    
-    //将纹理图像附加到帧缓冲对象
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _texture_render_id, 0);
 }
 
 - (UIImage*) resultImage
@@ -126,7 +109,17 @@ typedef struct {
     // 创建纹理
     _bgImg_t_id = [self createTextureWithImage:self.bgImage];
     _textImg_t_id = [self createTextureWithImage:self.textImage];
+    
+    //将纹理附加到帧缓冲对象
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _bgImg_t_id, 0);
 
+    // 创建顶点缓存
+    GLuint vertexBuffer;
+    glGenBuffers(1, &vertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    GLsizeiptr bufferSizeBytes = sizeof(SenceVertex) * 4;
+    glBufferData(GL_ARRAY_BUFFER, bufferSizeBytes, _vertices, GL_STATIC_DRAW);
+    
     // 设置视口尺寸
     glViewport(0, 0, _bgSize.width, _bgSize.height);
     
@@ -162,19 +155,14 @@ typedef struct {
 
     er = glGetError();
     
-    // 创建顶点缓存
-    GLuint vertexBuffer;
-    glGenBuffers(1, &vertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    GLsizeiptr bufferSizeBytes = sizeof(SenceVertex) * 4;
-    glBufferData(GL_ARRAY_BUFFER, bufferSizeBytes, _vertices, GL_STATIC_DRAW);
-    
     // 设置顶点数据
     glEnableVertexAttribArray(positionSlot);
+    // 设置解析顶点数据的方式
     glVertexAttribPointer(positionSlot, 3, GL_FLOAT, GL_FALSE, sizeof(SenceVertex), NULL + offsetof(SenceVertex, positionCoord));
     
-    // 设置纹理数据
+    // 设置纹理坐标
     glEnableVertexAttribArray(textureCoordsSlot);
+    // 设置解析纹理坐标的方式
     glVertexAttribPointer(textureCoordsSlot, 2, GL_FLOAT, GL_FALSE, sizeof(SenceVertex), NULL + offsetof(SenceVertex, textureCoord));
     
     // 开始绘制
